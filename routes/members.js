@@ -3,6 +3,27 @@ const router = express.Router();
 const db = require('../config/database');
 const path = require('path');
 
+// Check for duplicate mobile number
+router.get('/check-mobile', async (req, res) => {
+    try {
+        const { mobileNo } = req.query;
+        
+        if (!mobileNo || mobileNo.length !== 11) {
+            return res.status(400).json({ error: 'Invalid mobile number format' });
+        }
+
+        const [existingUsers] = await db.query(
+            'SELECT id FROM contact_info WHERE mobileNo = ?',
+            [mobileNo]
+        );
+
+        res.json({ exists: existingUsers.length > 0 });
+    } catch (error) {
+        console.error('Error checking mobile number:', error);
+        res.status(500).json({ error: 'Failed to check mobile number' });
+    }
+});
+
 // Register new member
 router.post('/register', async (req, res) => {
     const conn = await db.getConnection();

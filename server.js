@@ -9,17 +9,15 @@ const app = express();
 
 // Middleware
 app.use(cors());
-
-// File upload middleware
-app.use(fileUpload({
-    limits: { fileSize: 10 * 1024 * 1024 }, // 10MB max file size
-    createParentPath: true,
-    parseNested: true // Enable nested object parsing
-}));
-
-// Body parsing middleware - after fileUpload middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(fileUpload({
+    createParentPath: true,
+    limits: { 
+        fileSize: 50 * 1024 * 1024 // 50MB max file size
+    },
+    abortOnLimit: true
+}));
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -51,6 +49,12 @@ app.get('/', (req, res) => {
 // Serve the registration form
 app.get('/registration', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'registration.html'));
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ error: 'Something went wrong!' });
 });
 
 // Start server

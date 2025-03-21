@@ -1232,7 +1232,17 @@
             const mobileNo = this.value;
             if (mobileNo.length === 11) {
                 try {
-                    const response = await fetch(`/api/check-mobile?mobileNo=${mobileNo}`);
+                    const response = await fetch(`/api/check-mobile?mobileNo=${mobileNo}`, {
+                        method: 'GET',
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
                     const data = await response.json();
                     if (data.exists) {
                         this.setCustomValidity('Duplicate Mobile No. exist on the database. Please enter another no.');
@@ -1251,6 +1261,12 @@
                     }
                 } catch (error) {
                     console.error('Error checking mobile number:', error);
+                    this.setCustomValidity('Error checking mobile number. Please try again.');
+                    this.classList.add('is-invalid');
+                    const feedback = this.nextElementSibling;
+                    if (feedback && feedback.classList.contains('invalid-feedback')) {
+                        feedback.textContent = 'Error checking mobile number. Please try again.';
+                    }
                 }
             }
         });
