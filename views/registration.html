@@ -1205,13 +1205,12 @@
             }
         }
 
-        // Mobile number validation
+        // Mobile number input handling
         document.getElementById('mobileNo').addEventListener('input', function(e) {
             const mobileNo = e.target.value.replace(/\D/g, '');
             if (mobileNo.length > 11) {
                 e.target.value = mobileNo.slice(0, 11);
             }
-            validateMobileNumber(this);
         });
 
         document.getElementById('emergencyPhone').addEventListener('input', function(e) {
@@ -1219,13 +1218,24 @@
             if (phone.length > 11) {
                 e.target.value = phone.slice(0, 11);
             }
-            validateMobileNumber(this);
         });
 
         // Email validation
         document.getElementById('email').addEventListener('input', function(e) {
             validateEmail(this);
         });
+
+        function validateEmail(input) {
+            const email = input.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                input.setCustomValidity('Please enter a valid email address');
+                input.classList.add('is-invalid');
+            } else {
+                input.setCustomValidity('');
+                input.classList.remove('is-invalid');
+            }
+        }
 
         // Check for duplicate mobile number
         document.getElementById('mobileNo').addEventListener('blur', async function() {
@@ -1292,18 +1302,6 @@
             const mobileNo = input.value.replace(/\D/g, '');
             if (mobileNo.length !== 11) {
                 input.setCustomValidity('Please enter a valid 11-digit mobile number');
-                input.classList.add('is-invalid');
-            } else {
-                input.setCustomValidity('');
-                input.classList.remove('is-invalid');
-            }
-        }
-
-        function validateEmail(input) {
-            const email = input.value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                input.setCustomValidity('Please enter a valid email address');
                 input.classList.add('is-invalid');
             } else {
                 input.setCustomValidity('');
