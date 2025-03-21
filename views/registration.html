@@ -327,9 +327,8 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="mobileNo" class="form-label">Mobile No. <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" id="mobileNo" name="mobileNo" 
-                                   pattern="[0-9]{11}" maxlength="11" required>
-                            <div class="invalid-feedback">Please enter a valid 11-digit mobile number</div>
+                            <input type="tel" class="form-control" id="mobileNo" name="mobileNo" required>
+                            <div class="invalid-feedback">Please enter your mobile number</div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
@@ -396,8 +395,7 @@
                         </div>
                         <div class="col-md-4 mb-3">
                             <label for="emergencyPhone" class="form-label">Phone <span class="text-danger">*</span></label>
-                            <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone" 
-                                   pattern="[0-9]{11}" maxlength="11" required>
+                            <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone" required>
                             <div class="invalid-feedback">Please enter a valid 11-digit phone number</div>
                         </div>
                     </div>
@@ -1205,21 +1203,6 @@
             }
         }
 
-        // Mobile number input handling
-        document.getElementById('mobileNo').addEventListener('input', function(e) {
-            const mobileNo = e.target.value.replace(/\D/g, '');
-            if (mobileNo.length > 11) {
-                e.target.value = mobileNo.slice(0, 11);
-            }
-        });
-
-        document.getElementById('emergencyPhone').addEventListener('input', function(e) {
-            const phone = e.target.value.replace(/\D/g, '');
-            if (phone.length > 11) {
-                e.target.value = phone.slice(0, 11);
-            }
-        });
-
         // Email validation
         document.getElementById('email').addEventListener('input', function(e) {
             validateEmail(this);
@@ -1256,24 +1239,23 @@
                     clearTimeout(timeoutId);
                     
                     if (!response.ok) {
-                        const errorData = await response.json();
-                        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
                     
                     const data = await response.json();
                     if (data.exists) {
-                        this.setCustomValidity('Duplicate Mobile No. exist on the database. Please enter another no.');
+                        this.setCustomValidity('This mobile number is already registered. Please use a different number.');
                         this.classList.add('is-invalid');
                         const feedback = this.nextElementSibling;
                         if (feedback && feedback.classList.contains('invalid-feedback')) {
-                            feedback.textContent = 'Duplicate Mobile No. exist on the database. Please enter another no.';
+                            feedback.textContent = 'This mobile number is already registered. Please use a different number.';
                         }
                     } else {
                         this.setCustomValidity('');
                         this.classList.remove('is-invalid');
                         const feedback = this.nextElementSibling;
                         if (feedback && feedback.classList.contains('invalid-feedback')) {
-                            feedback.textContent = 'Please enter a valid 11-digit mobile number';
+                            feedback.textContent = 'Please enter your mobile number';
                         }
                     }
                 } catch (error) {
@@ -1297,17 +1279,6 @@
                 }
             }
         });
-
-        function validateMobileNumber(input) {
-            const mobileNo = input.value.replace(/\D/g, '');
-            if (mobileNo.length !== 11) {
-                input.setCustomValidity('Please enter a valid 11-digit mobile number');
-                input.classList.add('is-invalid');
-            } else {
-                input.setCustomValidity('');
-                input.classList.remove('is-invalid');
-            }
-        }
 
         // Handle "Other" options in dropdowns
         document.getElementById('supportArea').addEventListener('change', function() {
@@ -1335,6 +1306,16 @@
                 otherBusinessTypeField.style.display = 'none';
                 otherBusinessTypeInput.required = false;
                 otherBusinessTypeInput.value = '';
+            }
+        });
+
+        // Basic mobile number input handling
+        document.getElementById('mobileNo').addEventListener('input', function(e) {
+            this.setCustomValidity('');
+            this.classList.remove('is-invalid');
+            const feedback = this.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+                feedback.textContent = 'Please enter your mobile number';
             }
         });
     </script>
