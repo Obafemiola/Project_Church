@@ -5,6 +5,7 @@ const path = require('path');
 
 // Check for duplicate mobile number
 router.get('/check-mobile', async (req, res) => {
+    const conn = await db.getConnection();
     try {
         const { mobileNo } = req.query;
         
@@ -12,7 +13,7 @@ router.get('/check-mobile', async (req, res) => {
             return res.status(400).json({ error: 'Invalid mobile number format' });
         }
 
-        const [existingUsers] = await db.query(
+        const [existingUsers] = await conn.query(
             'SELECT id FROM contact_info WHERE mobileNo = ?',
             [mobileNo]
         );
@@ -21,6 +22,8 @@ router.get('/check-mobile', async (req, res) => {
     } catch (error) {
         console.error('Error checking mobile number:', error);
         res.status(500).json({ error: 'Failed to check mobile number' });
+    } finally {
+        conn.release();
     }
 });
 
