@@ -5,25 +5,44 @@ const path = require('path');
 
 // Check for duplicate mobile number
 router.get('/check-mobile', async (req, res) => {
-    const conn = await db.getConnection();
+    let conn;
     try {
+        conn = await db.getConnection();
         const { mobileNo } = req.query;
         
         if (!mobileNo || mobileNo.length !== 11) {
             return res.status(400).json({ error: 'Invalid mobile number format' });
         }
 
-        const [existingUsers] = await conn.query(
+        // Set a timeout for the query
+        const queryPromise = conn.query(
             'SELECT id FROM contact_info WHERE mobileNo = ?',
             [mobileNo]
         );
 
+        // Add a timeout to the query
+        const timeoutPromise = new Promise((_, reject) => {
+            setTimeout(() => reject(new Error('Query timeout')), 5000);
+        });
+
+        const [existingUsers] = await Promise.race([queryPromise, timeoutPromise]);
+
         res.json({ exists: existingUsers.length > 0 });
     } catch (error) {
         console.error('Error checking mobile number:', error);
-        res.status(500).json({ error: 'Failed to check mobile number' });
+        
+        // Handle different types of errors
+        if (error.code === 'ETIMEDOUT' || error.message === 'Query timeout') {
+            res.status(504).json({ error: 'Request timed out. Please try again.' });
+        } else if (error.code === 'ER_CON_COUNT_ERROR') {
+            res.status(503).json({ error: 'Too many connections. Please try again later.' });
+        } else {
+            res.status(500).json({ error: 'Failed to check mobile number. Please try again.' });
+        }
     } finally {
-        conn.release();
+        if (conn) {
+            conn.release();
+        }
     }
 });
 
