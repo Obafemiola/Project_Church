@@ -21,8 +21,8 @@
 
         body {
             background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1974') no-repeat center center fixed;
-            background-size: cover;
+                        url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=1974') repeat;
+            background-size: 300px 300px;
             min-height: 100vh;
             color: var(--text-color);
             font-family: 'Poppins', sans-serif;
@@ -246,355 +246,413 @@
         
         <form id="registrationForm" novalidate>
             <!-- Personal Information -->
-            <div class="form-section">
-                <h2 class="section-title">Personal Information</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="firstName" class="form-label required-field">First Name</label>
-                        <div class="form-tooltip">
-                            <input type="text" class="form-control" id="firstName" name="firstName" required>
-                            <span class="tooltip-text">Enter your legal first name</span>
-                            <div class="invalid-feedback">Please enter your first name</div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Personal Information <span class="text-danger">*</span></h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="firstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                            <div class="form-tooltip">
+                                <input type="text" class="form-control" id="firstName" name="firstName" required>
+                                <span class="tooltip-text">Enter your legal first name</span>
+                                <div class="invalid-feedback">Please enter your first name</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="lastName" class="form-label">Last Name <span class="text-danger">*</span></label>
+                            <div class="form-tooltip">
+                                <input type="text" class="form-control" id="lastName" name="lastName" required>
+                                <span class="tooltip-text">Enter your legal last name</span>
+                                <div class="invalid-feedback">Please enter your last name</div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="lastName" class="form-label required-field">Last Name</label>
-                        <div class="form-tooltip">
-                            <input type="text" class="form-control" id="lastName" name="lastName" required>
-                            <span class="tooltip-text">Enter your legal last name</span>
-                            <div class="invalid-feedback">Please enter your last name</div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="dateOfBirth" class="form-label">Date of Birth <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="gender" class="form-label">Gender <span class="text-danger">*</span></label>
+                            <select class="form-select" id="gender" name="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="dateOfBirth" class="form-label">Date of Birth</label>
-                        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="maritalStatus" class="form-label">Marital Status <span class="text-danger">*</span></label>
+                            <select class="form-select" id="maritalStatus" name="maritalStatus" required>
+                                <option value="">Select Marital Status</option>
+                                <option value="Single">Single</option>
+                                <option value="Married">Married</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="gender" class="form-label">Gender</label>
-                        <select class="form-select" id="gender" name="gender" required>
-                            <option value="">Select Gender</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="maritalStatus" class="form-label">Marital Status</label>
-                        <select class="form-select" id="maritalStatus" name="maritalStatus" required>
-                            <option value="">Select Marital Status</option>
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Social Media Handles</label>
-                    <div>
-                        <input type="checkbox" id="instagram" class="social-media-checkbox" name="socialMedia">
-                        <label for="instagram" class="social-media-label">
-                            <i class="bi bi-instagram me-2"></i> Instagram
-                        </label>
-                        <input type="text" class="form-control social-media-handle" id="instagramHandle" placeholder="@username">
+                    <div class="mb-3">
+                        <label class="form-label">Social Media Handles</label>
+                        <div>
+                            <input type="checkbox" id="instagram" class="social-media-checkbox" name="socialMedia">
+                            <label for="instagram" class="social-media-label">
+                                <i class="bi bi-instagram me-2"></i> Instagram
+                            </label>
+                            <input type="text" class="form-control social-media-handle" id="instagramHandle" placeholder="@username">
 
-                        <input type="checkbox" id="twitter" class="social-media-checkbox" name="socialMedia">
-                        <label for="twitter" class="social-media-label">
-                            <i class="bi bi-twitter me-2"></i> Twitter
-                        </label>
-                        <input type="text" class="form-control social-media-handle" id="twitterHandle" placeholder="@username">
+                            <input type="checkbox" id="twitter" class="social-media-checkbox" name="socialMedia">
+                            <label for="twitter" class="social-media-label">
+                                <i class="bi bi-twitter me-2"></i> Twitter
+                            </label>
+                            <input type="text" class="form-control social-media-handle" id="twitterHandle" placeholder="@username">
 
-                        <input type="checkbox" id="tiktok" class="social-media-checkbox" name="socialMedia">
-                        <label for="tiktok" class="social-media-label">
-                            <i class="bi bi-tiktok me-2"></i> TikTok
-                        </label>
-                        <input type="text" class="form-control social-media-handle" id="tiktokHandle" placeholder="@username">
+                            <input type="checkbox" id="tiktok" class="social-media-checkbox" name="socialMedia">
+                            <label for="tiktok" class="social-media-label">
+                                <i class="bi bi-tiktok me-2"></i> TikTok
+                            </label>
+                            <input type="text" class="form-control social-media-handle" id="tiktokHandle" placeholder="@username">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Contact Information -->
-            <div class="form-section">
-                <h2 class="section-title">Contact Information</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="mobileNo" class="form-label">Mobile Number</label>
-                        <input type="tel" class="form-control" id="mobileNo" name="mobileNo" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Contact Information <span class="text-danger">*</span></h5>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="houseNo" class="form-label">House Number</label>
-                        <input type="text" class="form-control" id="houseNo" name="houseNo" required>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="mobileNo" class="form-label">Mobile No. <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="mobileNo" name="mobileNo" 
+                                   pattern="[0-9]{11}" maxlength="11" required>
+                            <div class="invalid-feedback">Please enter a valid 11-digit mobile number</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="invalid-feedback">Please enter a valid email address</div>
+                        </div>
                     </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="streetName" class="form-label">Street Name</label>
-                        <input type="text" class="form-control" id="streetName" name="streetName" required>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="houseNo" class="form-label">House Number <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="houseNo" name="houseNo" required>
+                            <div class="invalid-feedback">Please enter your house number</div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="streetName" class="form-label">Street Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="streetName" name="streetName" required>
+                            <div class="invalid-feedback">Please enter your street name</div>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="city" class="form-label">City</label>
-                        <input type="text" class="form-control" id="city" name="city">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="city" class="form-label">City of Residence</label>
+                            <input type="text" class="form-control" id="city" name="city">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="country" class="form-label">Country of Residence <span class="text-danger">*</span></label>
+                            <select class="form-select" id="country" name="country" required>
+                                <option value="">Select Country</option>
+                            </select>
+                            <div class="invalid-feedback">Please select your country of residence</div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="state" class="form-label">State of Residence</label>
+                            <select class="form-select" id="state" name="state">
+                                <option value="">Select State</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="country" class="form-label">Country of Residence</label>
-                        <select class="form-select" id="country" name="country" required>
-                            <option value="">Select Country</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4 mb-3">
-                        <label for="state" class="form-label">State</label>
-                        <select class="form-select" id="state" name="state" required>
-                            <option value="">Select State</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4 mb-3">
-                        <label for="localGovt" class="form-label">Local Government</label>
-                        <select class="form-select" id="localGovt" name="localGovt" required>
-                            <option value="">Select Local Government</option>
-                        </select>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="localGovt" class="form-label">Local Government of Residence</label>
+                            <select class="form-select" id="localGovt" name="localGovt">
+                                <option value="">Select Local Government</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Emergency Contact -->
-            <div class="form-section">
-                <h2 class="section-title">Emergency Contact</h2>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="emergencyName" class="form-label">Full Name</label>
-                        <input type="text" class="form-control" id="emergencyName" name="emergencyName" required>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <label for="emergencyRelationship" class="form-label">Relationship</label>
-                        <input type="text" class="form-control" id="emergencyRelationship" name="emergencyRelationship" required>
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Emergency Contact <span class="text-danger">*</span></h5>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="emergencyPhone" class="form-label">Phone Number</label>
-                        <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone" required>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label for="emergencyName" class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="emergencyName" name="emergencyName" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="emergencyRelationship" class="form-label">Relationship <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="emergencyRelationship" name="emergencyRelationship" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label for="emergencyPhone" class="form-label">Phone <span class="text-danger">*</span></label>
+                            <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone" 
+                                   pattern="[0-9]{11}" maxlength="11" required>
+                            <div class="invalid-feedback">Please enter a valid 11-digit phone number</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Professional Information -->
-            <div class="form-section">
-                <h2 class="section-title">Professional Information</h2>
-                <div class="row mb-3">
-                    <div class="col-12">
-                        <label for="professionalStatus" class="form-label">Current Status</label>
-                        <select class="form-select" id="professionalStatus" name="professionalStatus" required>
-                            <option value="">Select Status</option>
-                            <option value="working">Currently Working</option>
-                            <option value="not_working">Not Working</option>
-                            <option value="student">Student</option>
-                            <option value="just_finished">Just Finished University</option>
-                        </select>
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Professional Information <span class="text-danger">*</span></h5>
                 </div>
-
-                <!-- Working Section -->
-                <div id="workingSection" class="status-section" style="display: none;">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="profession" class="form-label">Profession</label>
-                            <select class="form-select" id="profession" name="profession">
-                                <option value="">Select Profession</option>
-                                <option value="Software Engineer">Software Engineer</option>
-                                <option value="Project Manager">Project Manager</option>
-                                <option value="Healthcare Professional">Healthcare Professional</option>
-                                <option value="Teacher">Teacher</option>
-                                <option value="Accountant">Accountant</option>
-                                <option value="Business Analyst">Business Analyst</option>
-                                <option value="Data Scientist">Data Scientist</option>
-                                <option value="Marketing Professional">Marketing Professional</option>
-                                <option value="Human Resources">Human Resources</option>
-                                <option value="Legal Professional">Legal Professional</option>
-                                <option value="Sales Professional">Sales Professional</option>
-                                <option value="Architect">Architect</option>
-                                <option value="Civil Engineer">Civil Engineer</option>
-                                <option value="Mechanical Engineer">Mechanical Engineer</option>
-                                <option value="Electrical Engineer">Electrical Engineer</option>
-                                <option value="Doctor">Doctor</option>
-                                <option value="Nurse">Nurse</option>
-                                <option value="Pharmacist">Pharmacist</option>
-                                <option value="Financial Analyst">Financial Analyst</option>
-                                <option value="Graphic Designer">Graphic Designer</option>
-                                <option value="Content Writer">Content Writer</option>
-                                <option value="Other">Other</option>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <label for="professionalStatus" class="form-label">Current Status</label>
+                            <select class="form-select" id="professionalStatus" name="professionalStatus" required>
+                                <option value="">Select Status</option>
+                                <option value="working">Currently Working</option>
+                                <option value="not_working">Not Working</option>
+                                <option value="student">Student</option>
+                                <option value="just_finished">Just Finished University</option>
                             </select>
-                            <div id="otherProfessionField" class="mt-2" style="display: none;">
-                                <input type="text" class="form-control" id="otherProfession" name="otherProfession" placeholder="Please specify your profession">
+                        </div>
+                    </div>
+
+                    <!-- Working Section -->
+                    <div id="workingSection" class="status-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="profession" class="form-label">Profession</label>
+                                <select class="form-select" id="profession" name="profession">
+                                    <option value="">Select Profession</option>
+                                    <option value="Software Engineer">Software Engineer</option>
+                                    <option value="Project Manager">Project Manager</option>
+                                    <option value="Healthcare Professional">Healthcare Professional</option>
+                                    <option value="Teacher">Teacher</option>
+                                    <option value="Accountant">Accountant</option>
+                                    <option value="Business Analyst">Business Analyst</option>
+                                    <option value="Data Scientist">Data Scientist</option>
+                                    <option value="Marketing Professional">Marketing Professional</option>
+                                    <option value="Human Resources">Human Resources</option>
+                                    <option value="Legal Professional">Legal Professional</option>
+                                    <option value="Sales Professional">Sales Professional</option>
+                                    <option value="Architect">Architect</option>
+                                    <option value="Civil Engineer">Civil Engineer</option>
+                                    <option value="Mechanical Engineer">Mechanical Engineer</option>
+                                    <option value="Electrical Engineer">Electrical Engineer</option>
+                                    <option value="Doctor">Doctor</option>
+                                    <option value="Nurse">Nurse</option>
+                                    <option value="Pharmacist">Pharmacist</option>
+                                    <option value="Financial Analyst">Financial Analyst</option>
+                                    <option value="Graphic Designer">Graphic Designer</option>
+                                    <option value="Content Writer">Content Writer</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div id="otherProfessionField" class="mt-2" style="display: none;">
+                                    <input type="text" class="form-control" id="otherProfession" name="otherProfession" placeholder="Please specify your profession">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="workplaceName" class="form-label">Workplace Name</label>
+                                <input type="text" class="form-control" id="workplaceName" name="workplaceName">
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="workplaceName" class="form-label">Workplace Name</label>
-                            <input type="text" class="form-control" id="workplaceName" name="workplaceName">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="position" class="form-label">Position/Role</label>
-                            <input type="text" class="form-control" id="position" name="position">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="experienceDuration" class="form-label">Experience Duration (Years)</label>
-                            <input type="number" class="form-control" id="experienceDuration" name="experienceDuration" min="0">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Not Working Section -->
-                <div id="notWorkingSection" class="status-section" style="display: none;">
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <label for="cvUpload" class="form-label">Upload CV (PDF or Word format)</label>
-                            <input type="file" class="form-control" id="cvUpload" name="cvUpload" accept=".pdf,.doc,.docx">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Student Section -->
-                <div id="studentSection" class="status-section" style="display: none;">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="university" class="form-label">University/Polytechnic</label>
-                            <select class="form-select" id="university" name="university">
-                                <option value="">Select Institution</option>
-                                <option value="University of Lagos">University of Lagos</option>
-                                <option value="Ahmadu Bello University">Ahmadu Bello University</option>
-                                <option value="Obafemi Awolowo University">Obafemi Awolowo University</option>
-                                <option value="University of Ibadan">University of Ibadan</option>
-                                <option value="University of Nigeria">University of Nigeria</option>
-                                <option value="University of Benin">University of Benin</option>
-                                <option value="Federal University of Technology, Akure">Federal University of Technology, Akure</option>
-                                <option value="Federal University of Technology, Minna">Federal University of Technology, Minna</option>
-                                <option value="Federal University of Technology, Owerri">Federal University of Technology, Owerri</option>
-                                <option value="Lagos State University">Lagos State University</option>
-                                <option value="Yaba College of Technology">Yaba College of Technology</option>
-                                <option value="Federal Polytechnic, Ilaro">Federal Polytechnic, Ilaro</option>
-                                <option value="Lagos State Polytechnic">Lagos State Polytechnic</option>
-                                <option value="Other">Other</option>
-                            </select>
-                            <div id="otherUniversityField" class="mt-2" style="display: none;">
-                                <input type="text" class="form-control" id="otherUniversity" name="otherUniversity" placeholder="Please specify your institution">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="position" class="form-label">Position/Role</label>
+                                <input type="text" class="form-control" id="position" name="position">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="experienceDuration" class="form-label">Experience Duration (Years)</label>
+                                <input type="number" class="form-control" id="experienceDuration" name="experienceDuration" min="0">
                             </div>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="currentLevel" class="form-label">Current Level</label>
-                            <select class="form-select" id="currentLevel" name="currentLevel">
-                                <option value="">Select Level</option>
-                                <option value="100">100 Level</option>
-                                <option value="200">200 Level</option>
-                                <option value="300">300 Level</option>
-                                <option value="400">400 Level</option>
-                                <option value="500">500 Level</option>
-                                <option value="600">600 Level</option>
-                                <option value="ND1">ND 1</option>
-                                <option value="ND2">ND 2</option>
-                                <option value="HND1">HND 1</option>
-                                <option value="HND2">HND 2</option>
-                            </select>
-                        </div>
                     </div>
-                </div>
 
-                <!-- Just Finished University Section -->
-                <div id="justFinishedSection" class="status-section" style="display: none;">
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <label for="nyscStatus" class="form-label">NYSC Placement Status</label>
-                            <select class="form-select" id="nyscStatus" name="nyscStatus">
-                                <option value="">Select NYSC Status</option>
-                                <option value="about_to_go">About to Go NYSC placement</option>
-                                <option value="doing_nysc">Doing NYSC</option>
-                                <option value="about_to_finish">About to finish NYSC (Minimum 1 month left)</option>
-                            </select>
+                    <!-- Not Working Section -->
+                    <div id="notWorkingSection" class="status-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="cvUpload" class="form-label">Upload CV (PDF or Word format)</label>
+                                <input type="file" class="form-control" id="cvUpload" name="cvUpload" accept=".pdf,.doc,.docx">
+                            </div>
                         </div>
                     </div>
-                    <div id="stateOfPostingSection" class="row" style="display: none;">
-                        <div class="col-md-6 mb-3">
-                            <label for="stateOfPosting" class="form-label">State of Posting</label>
-                            <select class="form-select" id="stateOfPosting" name="stateOfPosting">
-                                <option value="">Select State of Posting</option>
-                            </select>
+
+                    <!-- Student Section -->
+                    <div id="studentSection" class="status-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="university" class="form-label">University/Polytechnic</label>
+                                <select class="form-select" id="university" name="university">
+                                    <option value="">Select Institution</option>
+                                    <option value="University of Lagos">University of Lagos</option>
+                                    <option value="Ahmadu Bello University">Ahmadu Bello University</option>
+                                    <option value="Obafemi Awolowo University">Obafemi Awolowo University</option>
+                                    <option value="University of Ibadan">University of Ibadan</option>
+                                    <option value="University of Nigeria">University of Nigeria</option>
+                                    <option value="University of Benin">University of Benin</option>
+                                    <option value="Federal University of Technology, Akure">Federal University of Technology, Akure</option>
+                                    <option value="Federal University of Technology, Minna">Federal University of Technology, Minna</option>
+                                    <option value="Federal University of Technology, Owerri">Federal University of Technology, Owerri</option>
+                                    <option value="Lagos State University">Lagos State University</option>
+                                    <option value="Yaba College of Technology">Yaba College of Technology</option>
+                                    <option value="Federal Polytechnic, Ilaro">Federal Polytechnic, Ilaro</option>
+                                    <option value="Lagos State Polytechnic">Lagos State Polytechnic</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                                <div id="otherUniversityField" class="mt-2" style="display: none;">
+                                    <input type="text" class="form-control" id="otherUniversity" name="otherUniversity" placeholder="Please specify your institution">
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="currentLevel" class="form-label">Current Level</label>
+                                <select class="form-select" id="currentLevel" name="currentLevel">
+                                    <option value="">Select Level</option>
+                                    <option value="100">100 Level</option>
+                                    <option value="200">200 Level</option>
+                                    <option value="300">300 Level</option>
+                                    <option value="400">400 Level</option>
+                                    <option value="500">500 Level</option>
+                                    <option value="600">600 Level</option>
+                                    <option value="ND1">ND 1</option>
+                                    <option value="ND2">ND 2</option>
+                                    <option value="HND1">HND 1</option>
+                                    <option value="HND2">HND 2</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Just Finished University Section -->
+                    <div id="justFinishedSection" class="status-section" style="display: none;">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="nyscStatus" class="form-label">NYSC Placement Status</label>
+                                <select class="form-select" id="nyscStatus" name="nyscStatus">
+                                    <option value="">Select NYSC Status</option>
+                                    <option value="about_to_go">About to Go NYSC placement</option>
+                                    <option value="doing_nysc">Doing NYSC</option>
+                                    <option value="about_to_finish">About to finish NYSC (Minimum 1 month left)</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="stateOfPostingSection" class="row" style="display: none;">
+                            <div class="col-md-6 mb-3">
+                                <label for="stateOfPosting" class="form-label">State of Posting</label>
+                                <select class="form-select" id="stateOfPosting" name="stateOfPosting">
+                                    <option value="">Select State of Posting</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Certifications -->
-            <div class="form-section">
-                <h2 class="section-title">Certifications</h2>
-                <div class="mb-3">
-                    <label for="certifications" class="form-label">Professional Certifications (comma-separated)</label>
-                    <input type="text" class="form-control" id="certifications" name="certifications" placeholder="e.g., PMP, CISSP, AWS">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Certifications</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="certifications" class="form-label">Professional Certifications (comma-separated)</label>
+                        <input type="text" class="form-control" id="certifications" name="certifications" placeholder="e.g., PMP, CISSP, AWS">
+                    </div>
                 </div>
             </div>
 
             <!-- Skills -->
-            <div class="form-section">
-                <h2 class="section-title">Skills</h2>
-                <div class="mb-3">
-                    <label for="skills" class="form-label">Professional Skills (comma-separated)</label>
-                    <input type="text" class="form-control" id="skills" name="skills" placeholder="e.g., Project Management, Web Development, Digital Marketing">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Skills</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label for="skills" class="form-label">Professional Skills (comma-separated)</label>
+                        <input type="text" class="form-control" id="skills" name="skills" placeholder="e.g., Project Management, Web Development, Digital Marketing">
+                    </div>
                 </div>
             </div>
 
             <!-- Church Support -->
-            <div class="form-section">
-                <h2 class="section-title">Church Support</h2>
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="isAvailableForSupport" name="isAvailableForSupport">
-                        <label class="form-check-label" for="isAvailableForSupport">
-                            Available for Church Support
-                        </label>
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Church Support</h5>
                 </div>
-                <div id="supportAreaField" style="display: none;">
+                <div class="card-body">
                     <div class="mb-3">
-                        <label for="supportArea" class="form-label">Area of Support</label>
-                        <select class="form-select" id="supportArea" name="supportArea">
-                            <option value="">Select Area</option>
-                            <option value="career_coaching">Career Coaching</option>
-                            <option value="legal_support">Legal Support</option>
-                            <option value="mentoring">Mentoring</option>
-                            <option value="church_worker">Church Worker</option>
-                        </select>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isAvailableForSupport" name="isAvailableForSupport">
+                            <label class="form-check-label" for="isAvailableForSupport">
+                               Are you willing to volunteer as a worked in the Ambassador Church
+                            </label>
+                        </div>
+                    </div>
+                    <div id="supportAreaField" style="display: none;">
+                        <div class="mb-3">
+                            <label for="supportArea" class="form-label">Area of Support</label>
+                            <select class="form-select" id="supportArea" name="supportArea">
+                                <option value="">Select Area</option>
+                                <option value="career_coaching">Career Coaching</option>
+                                <option value="legal_support">Legal Support</option>
+                                <option value="mentoring">Mentoring</option>
+                                <option value="sounds_engineering">Sounds Engineering</option>
+                                <option value="ushers">Ushers</option>
+                                <option value="choir">Choir</option>
+                                <option value="technical_team">Technical Team</option>
+                                <option value="media_ict">Media and ICT</option>
+                                <option value="children_ministry">Children Ministry</option>
+                                <option value="evangelism">Evangelism</option>
+                                <option value="administration">Administration</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div id="otherSupportAreaField" class="mt-2" style="display: none;">
+                                <input type="text" class="form-control" id="otherSupportArea" name="otherSupportArea" placeholder="Please specify your area of support">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Entrepreneurial Interests -->
-            <div class="form-section">
-                <h2 class="section-title">Entrepreneurial Interests</h2>
-                <div class="mb-3">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="isEntrepreneur" name="isEntrepreneur">
-                        <label class="form-check-label" for="isEntrepreneur">
-                            Interested in Entrepreneurship
-                        </label>
-                    </div>
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Entrepreneurial Interests</h5>
                 </div>
-                <div id="businessTypeField" style="display: none;">
+                <div class="card-body">
                     <div class="mb-3">
-                        <label for="businessType" class="form-label">Type of Business Interest</label>
-                        <select class="form-select" id="businessType" name="businessType">
-                            <option value="">Select Type</option>
-                            <option value="Small Business Owner">Small Business Owner</option>
-                            <option value="Freelancer">Freelancer</option>
-                            <option value="Consultant">Consultant</option>
-                        </select>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isEntrepreneur" name="isEntrepreneur">
+                            <label class="form-check-label" for="isEntrepreneur">
+                                Interested in Entrepreneurship and Mentoring Classes
+                            </label>
+                        </div>
+                    </div>
+                    <div id="businessTypeField" style="display: none;">
+                        <div class="mb-3">
+                            <label for="businessType" class="form-label">Type of Business Interest</label>
+                            <select class="form-select" id="businessType" name="businessType">
+                                <option value="">Select Type</option>
+                                <option value="Small Business Owner">Small Business Owner</option>
+                                <option value="Freelancer">Freelancer</option>
+                                <option value="Consultant">Consultant</option>
+                                <option value="Fashion Designer">Fashion Designer</option>
+                                <option value="Event Planner">Event Planner</option>
+                                <option value="Graphic Designer">Graphic Designer</option>
+                                <option value="Web Developer">Web Developer</option>
+                                <option value="Software Developer">Software Developer</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <div id="otherBusinessTypeField" class="mt-2" style="display: none;">
+                                <input type="text" class="form-control" id="otherBusinessType" name="otherBusinessType" placeholder="Please specify your interest type">
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -606,19 +664,17 @@
 
         <!-- Success Modal -->
         <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header bg-success text-white">
-                        <h5 class="modal-title" id="successModalLabel">Registration Successful!</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="successModalLabel">Registration Successful</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body text-center">
-                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
-                        <p class="mt-3 mb-0 h5">Thank you for registering!</p>
-                        <p class="mt-2">Your Member ID is: <span id="memberIdDisplay" class="fw-bold"></span></p>
+                    <div class="modal-body">
+                        <p>Your registration has been completed successfully!</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Exit</button>
                     </div>
                 </div>
             </div>
@@ -890,9 +946,6 @@
                 const result = await response.json();
                 
                 if (response.ok) {
-                    // Update member ID in modal
-                    document.getElementById('memberIdDisplay').textContent = result.memberId;
-                    
                     // Show success modal
                     const successModal = new bootstrap.Modal(document.getElementById('successModal'));
                     successModal.show();
@@ -1151,6 +1204,108 @@
                 }
             }
         }
+
+        // Mobile number validation
+        document.getElementById('mobileNo').addEventListener('input', function(e) {
+            const mobileNo = e.target.value.replace(/\D/g, '');
+            if (mobileNo.length > 11) {
+                e.target.value = mobileNo.slice(0, 11);
+            }
+            validateMobileNumber(this);
+        });
+
+        document.getElementById('emergencyPhone').addEventListener('input', function(e) {
+            const phone = e.target.value.replace(/\D/g, '');
+            if (phone.length > 11) {
+                e.target.value = phone.slice(0, 11);
+            }
+            validateMobileNumber(this);
+        });
+
+        // Email validation
+        document.getElementById('email').addEventListener('input', function(e) {
+            validateEmail(this);
+        });
+
+        // Check for duplicate mobile number
+        document.getElementById('mobileNo').addEventListener('blur', async function() {
+            const mobileNo = this.value;
+            if (mobileNo.length === 11) {
+                try {
+                    const response = await fetch(`/api/check-mobile?mobileNo=${mobileNo}`);
+                    const data = await response.json();
+                    if (data.exists) {
+                        this.setCustomValidity('Duplicate Mobile No. exist on the database. Please enter another no.');
+                        this.classList.add('is-invalid');
+                        const feedback = this.nextElementSibling;
+                        if (feedback && feedback.classList.contains('invalid-feedback')) {
+                            feedback.textContent = 'Duplicate Mobile No. exist on the database. Please enter another no.';
+                        }
+                    } else {
+                        this.setCustomValidity('');
+                        this.classList.remove('is-invalid');
+                        const feedback = this.nextElementSibling;
+                        if (feedback && feedback.classList.contains('invalid-feedback')) {
+                            feedback.textContent = 'Please enter a valid 11-digit mobile number';
+                        }
+                    }
+                } catch (error) {
+                    console.error('Error checking mobile number:', error);
+                }
+            }
+        });
+
+        function validateMobileNumber(input) {
+            const mobileNo = input.value.replace(/\D/g, '');
+            if (mobileNo.length !== 11) {
+                input.setCustomValidity('Please enter a valid 11-digit mobile number');
+                input.classList.add('is-invalid');
+            } else {
+                input.setCustomValidity('');
+                input.classList.remove('is-invalid');
+            }
+        }
+
+        function validateEmail(input) {
+            const email = input.value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                input.setCustomValidity('Please enter a valid email address');
+                input.classList.add('is-invalid');
+            } else {
+                input.setCustomValidity('');
+                input.classList.remove('is-invalid');
+            }
+        }
+
+        // Handle "Other" options in dropdowns
+        document.getElementById('supportArea').addEventListener('change', function() {
+            const otherSupportAreaField = document.getElementById('otherSupportAreaField');
+            const otherSupportAreaInput = document.getElementById('otherSupportArea');
+            
+            if (this.value === 'Other') {
+                otherSupportAreaField.style.display = 'block';
+                otherSupportAreaInput.required = true;
+            } else {
+                otherSupportAreaField.style.display = 'none';
+                otherSupportAreaInput.required = false;
+                otherSupportAreaInput.value = '';
+            }
+        });
+
+        document.getElementById('businessType').addEventListener('change', function() {
+            const otherBusinessTypeField = document.getElementById('otherBusinessTypeField');
+            const otherBusinessTypeInput = document.getElementById('otherBusinessType');
+            
+            if (this.value === 'Other') {
+                otherBusinessTypeField.style.display = 'block';
+                otherBusinessTypeInput.required = true;
+            } else {
+                otherBusinessTypeField.style.display = 'none';
+                otherBusinessTypeInput.required = false;
+                otherBusinessTypeInput.value = '';
+            }
+        });
     </script>
 </body>
 </html> 
