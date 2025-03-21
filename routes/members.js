@@ -2,27 +2,8 @@ const express = require('express');
 const router = express.Router();
 const db = require('../config/database');
 const path = require('path');
-
-// Check if mobile number exists
-router.get('/check-mobile', async (req, res) => {
-    const conn = await db.getConnection();
-    try {
-        const { mobileNo } = req.query;
-        
-        if (!mobileNo) {
-            return res.status(400).json({ error: 'Mobile number is required' });
-        }
-
-        const [existingUsers] = await conn.query('SELECT id FROM contact_info WHERE mobileNo = ?', [mobileNo]);
-        
-        res.json({ exists: existingUsers.length > 0 });
-    } catch (error) {
-        console.error('Error checking mobile number:', error);
-        res.status(500).json({ error: 'Error checking mobile number' });
-    } finally {
-        conn.release();
-    }
-});
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // Register new member
 router.post('/register', async (req, res) => {
