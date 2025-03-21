@@ -1221,64 +1221,7 @@
         }
 
         // Check for duplicate mobile number
-        document.getElementById('mobileNo').addEventListener('blur', async function() {
-            const mobileNo = this.value;
-            if (mobileNo.length === 11) {
-                try {
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
-
-                    const response = await fetch(`/api/check-mobile?mobileNo=${mobileNo}`, {
-                        method: 'GET',
-                        headers: {
-                            'Accept': 'application/json'
-                        },
-                        signal: controller.signal
-                    });
-                    
-                    clearTimeout(timeoutId);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    if (data.exists) {
-                        this.setCustomValidity('This mobile number is already registered. Please use a different number.');
-                        this.classList.add('is-invalid');
-                        const feedback = this.nextElementSibling;
-                        if (feedback && feedback.classList.contains('invalid-feedback')) {
-                            feedback.textContent = 'This mobile number is already registered. Please use a different number.';
-                        }
-                    } else {
-                        this.setCustomValidity('');
-                        this.classList.remove('is-invalid');
-                        const feedback = this.nextElementSibling;
-                        if (feedback && feedback.classList.contains('invalid-feedback')) {
-                            feedback.textContent = 'Please enter your mobile number';
-                        }
-                    }
-                } catch (error) {
-                    console.error('Error checking mobile number:', error);
-                    let errorMessage = 'Error checking mobile number. Please try again.';
-                    
-                    if (error.name === 'AbortError') {
-                        errorMessage = 'Request timed out. Please try again.';
-                    } else if (error.message.includes('504')) {
-                        errorMessage = 'Server is taking too long to respond. Please try again.';
-                    } else if (error.message.includes('503')) {
-                        errorMessage = 'Server is busy. Please try again in a moment.';
-                    }
-                    
-                    this.setCustomValidity(errorMessage);
-                    this.classList.add('is-invalid');
-                    const feedback = this.nextElementSibling;
-                    if (feedback && feedback.classList.contains('invalid-feedback')) {
-                        feedback.textContent = errorMessage;
-                    }
-                }
-            }
-        });
+        
 
         // Handle "Other" options in dropdowns
         document.getElementById('supportArea').addEventListener('change', function() {
