@@ -59,13 +59,34 @@ app.get('/', (req, res) => {
 
 // Serve the registration form
 app.get('/registration', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'registration.html'));
+  try {
+    const filePath = path.join(__dirname, 'views', 'registration.html');
+    console.log('Attempting to serve registration form from:', filePath);
+    
+    if (!require('fs').existsSync(filePath)) {
+      console.error('Registration form file not found at:', filePath);
+      return res.status(404).send('Registration form not found');
+    }
+    
+    res.sendFile(filePath);
+  } catch (error) {
+    console.error('Error serving registration form:', error);
+    res.status(500).send('Error loading registration form');
+  }
 });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(500).json({ error: 'Something went wrong!' });
+    console.error('Error details:', {
+        message: err.message,
+        stack: err.stack,
+        path: req.path,
+        method: req.method
+    });
+    res.status(500).json({ 
+        error: 'Something went wrong!',
+        details: process.env.NODE_ENV === 'development' ? err.message : undefined
+    });
 });
 
 // Start server
