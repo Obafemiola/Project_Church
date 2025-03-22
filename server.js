@@ -61,14 +61,33 @@ app.get('/', (req, res) => {
 app.get('/registration', (req, res) => {
   try {
     const filePath = path.join(__dirname, 'views', 'registration.html');
+    console.log('Current directory:', __dirname);
     console.log('Attempting to serve registration form from:', filePath);
     
+    // Check if file exists
     if (!require('fs').existsSync(filePath)) {
       console.error('Registration form file not found at:', filePath);
       return res.status(404).send('Registration form not found');
     }
+
+    // Check file permissions
+    try {
+      require('fs').accessSync(filePath, require('fs').constants.R_OK);
+      console.log('File exists and is readable');
+    } catch (err) {
+      console.error('File permission error:', err);
+      return res.status(500).send('Error accessing registration form');
+    }
     
-    res.sendFile(filePath);
+    // Try to read file content
+    try {
+      const content = require('fs').readFileSync(filePath, 'utf8');
+      console.log('File content length:', content.length);
+      res.sendFile(filePath);
+    } catch (err) {
+      console.error('Error reading file:', err);
+      return res.status(500).send('Error reading registration form');
+    }
   } catch (error) {
     console.error('Error serving registration form:', error);
     res.status(500).send('Error loading registration form');
