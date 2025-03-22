@@ -38,6 +38,17 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 
+// Test database connection
+const db = require('./config/database');
+db.getConnection()
+    .then(conn => {
+        console.log('Database connected successfully');
+        conn.release();
+    })
+    .catch(err => {
+        console.error('Database connection failed:', err);
+    });
+
 // Routes
 app.use('/api', memberRoutes);
 
