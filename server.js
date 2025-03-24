@@ -4,6 +4,7 @@ const cors = require('cors');
 const path = require('path');
 const fileUpload = require('express-fileupload');
 const memberRoutes = require('./routes/members');
+const reportsRouter = require('./routes/reports');
 
 const app = express();
 
@@ -41,16 +42,22 @@ app.set('view engine', 'html');
 app.engine('html', require('ejs').renderFile);
 
 // Routes
-app.use('/api', memberRoutes);
+app.use('/api/members', memberRoutes);
+app.use('/reports', reportsRouter);
 
 // Serve the landing page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+  res.sendFile(path.join(__dirname, 'views', 'registration.html'));
 });
 
 // Serve the registration form
 app.get('/registration', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'registration.html'));
+});
+
+// Serve report page
+app.get('/report', (req, res) => {
+    res.sendFile(path.join(__dirname, 'views', 'report.html'));
 });
 
 // Start server

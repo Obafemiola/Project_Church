@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Member Registration Reports</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .card-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 15px 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .stat-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        .stat-label {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .social-media-stats {
+            text-align: left;
+        }
+        .platform-name {
+            color: #666;
+            font-size: 1rem;
+        }
+        .platform-count {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .date-filter {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            transform: translateY(-2px);
+        }
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+        .error-message {
+            display: none;
+            color: #dc3545;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            background-color: #f8d7da;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="mb-0">Member Registration Reports</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Date Filter -->
+                        <div class="row mb-4">
+                            <div class="col-md-8">
+                                <div class="date-filter">
+                                    <div class="input-group">
+                                        <input type="date" id="startDate" class="form-control">
+                                        <span class="input-group-text">to</span>
+                                        <input type="date" id="endDate" class="form-control">
+                                        <button class="btn btn-primary" onclick="applyFilter()">Apply Filter</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button class="btn btn-success" onclick="exportToExcel()">
+                                    <i class="fas fa-file-excel"></i> Export to Excel
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Loading Indicator -->
+                        <div class="loading">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="error-message" id="errorMessage"></div>
+
+                        <!-- Total Members Card -->
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="totalMembers">0</div>
+                                    <div class="stat-label">Total Members</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-card">
+                                    <div class="stat-value" id="membersWithSocialMedia">0</div>
+                                    <div class="stat-label">Members with Social Media</div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="stat-card">
+                                    <div class="social-media-stats">
+                                        <div class="stat-label mb-2">Platform Distribution</div>
+                                        <div id="platformStats" class="d-flex flex-column gap-2">
+                                            <!-- Platform stats will be inserted here -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Charts Row -->
+                        <div class="row">
+                            <!-- Gender Distribution Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Gender Distribution</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="genderChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Marital Status Distribution Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Marital Status Distribution</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="maritalStatusChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Professional Status Charts Row -->
+                        <div class="row mt-4">
+                            <!-- Professional Status Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="mb-0">Professional Status Distribution</h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="professionalStatusChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Sub-Report Chart -->
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h3 class="mb-0" id="subReportTitle">Sub-Report</h3>
+                                        <button class="btn btn-sm btn-outline-light" onclick="hideSubReport()">
+                                            <i class="bi bi-x-lg"></i>
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="chart-container">
+                                            <canvas id="subReportChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize gender chart with new colors
+        const genderChart = new Chart(document.getElementById('genderChart'), {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: ['#FF6B6B', '#4ECDC4']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Initialize marital status chart with new colors
+        const maritalStatusChart = new Chart(document.getElementById('maritalStatusChart'), {
+            type: 'pie',
+            data: {
+                labels: [],
+                datasets: [{
+                    data: [],
+                    backgroundColor: ['#45B7D1', '#96CEB4', '#FFEEAD']
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Initialize professional status chart with new colors
+        const professionalStatusChart = new Chart(document.getElementById('professionalStatusChart'), {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Number of Members',
+                    data: [],
+                    backgroundColor: '#6C5CE7',
+                    borderColor: '#5B4BC7',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                onClick: (event, elements) => {
+                    if (elements.length > 0) {
+                        const index = elements[0].index;
+                        const status = professionalStatusChart.data.labels[index];
+                        showSubReport(status);
+                    }
+                }
+            }
+        });
+
+        // Initialize sub-report chart with new colors
+        const subReportChart = new Chart(document.getElementById('subReportChart'), {
+            type: 'bar',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Number of Members',
+                    data: [],
+                    backgroundColor: '#00B894',
+                    borderColor: '#00A187',
+                    borderWidth: 1,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Set default date range (last 30 days)
+        const today = new Date();
+        const thirtyDaysAgo = new Date(today);
+        thirtyDaysAgo.setDate(today.getDate() - 30);
+
+        document.getElementById('startDate').value = thirtyDaysAgo.toISOString().split('T')[0];
+        document.getElementById('endDate').value = today.toISOString().split('T')[0];
+
+        // Function to show sub-report
+        function showSubReport(status) {
+            const subReportSection = document.getElementById('subReportSection');
+            const subReportTitle = document.getElementById('subReportTitle');
+            let title = '';
+            let data = [];
+            let backgroundColor = '#00B894';
+            let borderColor = '#00A187';
+
+            switch(status) {
+                case 'working':
+                    title = 'Profession Distribution';
+                    data = currentData.subReports.working;
+                    backgroundColor = '#FF6B6B';
+                    borderColor = '#FF5252';
+                    break;
+                case 'just_finished':
+                    title = 'NYSC Status Distribution';
+                    data = currentData.subReports.just_finished;
+                    backgroundColor = '#4ECDC4';
+                    borderColor = '#45B7D1';
+                    break;
+                case 'student':
+                    title = 'University Distribution';
+                    data = currentData.subReports.student;
+                    backgroundColor = '#96CEB4';
+                    borderColor = '#88C0A0';
+                    break;
+            }
+
+            if (data && data.length > 0) {
+                subReportTitle.textContent = title;
+                subReportChart.data.labels = data.map(item => item.profession || item.nyscstatus || item.university);
+                subReportChart.data.datasets[0].data = data.map(item => item.count);
+                subReportChart.data.datasets[0].backgroundColor = backgroundColor;
+                subReportChart.data.datasets[0].borderColor = borderColor;
+                subReportChart.update();
+                subReportSection.style.display = 'block';
+            }
+        }
+
+        // Function to hide sub-report
+        function hideSubReport() {
+            document.getElementById('subReportSection').style.display = 'none';
+        }
+
+        // Store current data globally
+        let currentData = null;
+
+        // Function to fetch report data
+        async function fetchReportData(startDate, endDate) {
+            try {
+                document.querySelector('.loading').style.display = 'block';
+                document.getElementById('errorMessage').style.display = 'none';
+
+                console.log('Fetching data for date range:', { startDate, endDate });
+                const response = await fetch(`/reports/api/reports?startDate=${startDate}&endDate=${endDate}`);
+                console.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                console.log('Received data:', data);
+                currentData = data; // Store the data globally
+
+                // Update total members
+                document.getElementById('totalMembers').textContent = data.totalMembers || 0;
+
+                // Update members with social media
+                document.getElementById('membersWithSocialMedia').textContent = data.membersWithSocialMedia || 0;
+
+                // Update platform stats
+                const platformStatsContainer = document.getElementById('platformStats');
+                platformStatsContainer.innerHTML = ''; // Clear existing stats
+                
+                if (data.socialMediaPlatformStats && data.socialMediaPlatformStats.length > 0) {
+                    data.socialMediaPlatformStats.forEach(stat => {
+                        const platformDiv = document.createElement('div');
+                        platformDiv.className = 'd-flex justify-content-between align-items-center';
+                        platformDiv.innerHTML = `
+                            <span class="platform-name">${stat.platform}</span>
+                            <span class="platform-count">${stat.count}</span>
+                        `;
+                        platformStatsContainer.appendChild(platformDiv);
+                    });
+                }
+
+                // Update gender chart
+                if (data.genderStats && data.genderStats.length > 0) {
+                    genderChart.data.labels = data.genderStats.map(stat => stat.gender);
+                    genderChart.data.datasets[0].data = data.genderStats.map(stat => stat.count);
+                    genderChart.update();
+                }
+
+                // Update marital status chart
+                if (data.maritalStatusStats && data.maritalStatusStats.length > 0) {
+                    maritalStatusChart.data.labels = data.maritalStatusStats.map(stat => stat.marital_status);
+                    maritalStatusChart.data.datasets[0].data = data.maritalStatusStats.map(stat => stat.count);
+                    maritalStatusChart.update();
+                }
+
+                // Update professional status chart
+                if (data.professionalStatusStats && data.professionalStatusStats.length > 0) {
+                    professionalStatusChart.data.labels = data.professionalStatusStats.map(stat => stat.professional_status);
+                    professionalStatusChart.data.datasets[0].data = data.professionalStatusStats.map(stat => stat.count);
+                    professionalStatusChart.update();
+                }
+
+            } catch (error) {
+                console.error('Error fetching report data:', error);
+                document.getElementById('errorMessage').textContent = 'Error loading report data. Please try again.';
+                document.getElementById('errorMessage').style.display = 'block';
+            } finally {
+                document.querySelector('.loading').style.display = 'none';
+            }
+        }
+
+        // Function to apply date filter
+        function applyFilter() {
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('endDate').value;
+
+            if (!startDate || !endDate) {
+                document.getElementById('errorMessage').textContent = 'Please select both start and end dates.';
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            if (startDate > endDate) {
+                document.getElementById('errorMessage').textContent = 'Start date cannot be after end date.';
+                document.getElementById('errorMessage').style.display = 'block';
+                return;
+            }
+
+            fetchReportData(startDate, endDate);
+        }
+
+        // Add export function
+        async function exportToExcel() {
+            try {
+                const startDate = document.getElementById('startDate').value;
+                const endDate = document.getElementById('endDate').value;
+                
+                // Create the URL with query parameters
+                const url = `/reports/api/reports/export?startDate=${startDate}&endDate=${endDate}`;
+                
+                // Create a temporary link element
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'member_report.xlsx';
+                
+                // Append to body, click, and remove
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (error) {
+                console.error('Error exporting to Excel:', error);
+                alert('Failed to export report. Please try again.');
+            }
+        }
+
+        // Initial data load
+        fetchReportData(
+            document.getElementById('startDate').value,
+            document.getElementById('endDate').value
+        );
+    </script>
+</body>
+</html> 
