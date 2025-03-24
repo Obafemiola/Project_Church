@@ -268,26 +268,29 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="dateOfBirth" class="form-label">Date of Birth</label>
+                        <label for="dateOfBirth" class="form-label required-field">Date of Birth</label>
                         <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" required>
+                        <div class="invalid-feedback">Please enter your date of birth</div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="gender" class="form-label">Gender</label>
+                        <label for="gender" class="form-label required-field">Gender</label>
                         <select class="form-select" id="gender" name="gender" required>
                             <option value="">Select Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
+                        <div class="invalid-feedback">Please select your gender</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="maritalStatus" class="form-label">Marital Status</label>
+                        <label for="maritalStatus" class="form-label required-field">Marital Status</label>
                         <select class="form-select" id="maritalStatus" name="maritalStatus" required>
                             <option value="">Select Marital Status</option>
                             <option value="Single">Single</option>
                             <option value="Married">Married</option>
                         </select>
+                        <div class="invalid-feedback">Please select your marital status</div>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -319,27 +322,31 @@
                 <h2 class="section-title">Contact Information</h2>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="mobileNo" class="form-label">Mobile Number</label>
-                        <input type="tel" class="form-control" id="mobileNo" name="mobileNo" required>
+                        <label for="mobileNo" class="form-label required-field">Mobile Number</label>
+                        <input type="tel" class="form-control" id="mobileNo" name="mobileNo" required pattern="[0-9]{11}" maxlength="11">
+                        <div class="invalid-feedback">Please enter a valid 11-digit mobile number</div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="email" class="form-label required-field">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">
+                        <div class="invalid-feedback">Please enter a valid email address</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="houseNo" class="form-label">House Number</label>
+                        <label for="houseNo" class="form-label required-field">House Number</label>
                         <input type="text" class="form-control" id="houseNo" name="houseNo" required>
+                        <div class="invalid-feedback">Please enter your house number</div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="streetName" class="form-label">Street Name</label>
+                        <label for="streetName" class="form-label required-field">Street Name</label>
                         <input type="text" class="form-control" id="streetName" name="streetName" required>
+                        <div class="invalid-feedback">Please enter your street name</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="city" class="form-label">City</label>
+                        <label for="city" class="form-label">City of Residence</label>
                         <input type="text" class="form-control" id="city" name="city">
                     </div>
                     <div class="col-md-4 mb-3">
@@ -349,7 +356,7 @@
                         </select>
                     </div>
                     <div class="col-md-4 mb-3">
-                        <label for="state" class="form-label">State</label>
+                        <label for="state" class="form-label">State of Residence</label>
                         <select class="form-select" id="state" name="state" required>
                             <option value="">Select State</option>
                         </select>
@@ -357,7 +364,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-4 mb-3">
-                        <label for="localGovt" class="form-label">Local Government</label>
+                        <label for="localGovt" class="form-label">Local Government Area of Residence</label>
                         <select class="form-select" id="localGovt" name="localGovt" required>
                             <option value="">Select Local Government</option>
                         </select>
@@ -370,25 +377,28 @@
                 <h2 class="section-title">Emergency Contact</h2>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="emergencyName" class="form-label">Full Name</label>
+                        <label for="emergencyName" class="form-label required-field">Full Name</label>
                         <input type="text" class="form-control" id="emergencyName" name="emergencyName" required>
+                        <div class="invalid-feedback">Please enter emergency contact's full name</div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label for="emergencyRelationship" class="form-label">Relationship</label>
+                        <label for="emergencyRelationship" class="form-label required-field">Relationship</label>
                         <input type="text" class="form-control" id="emergencyRelationship" name="emergencyRelationship" required>
+                        <div class="invalid-feedback">Please enter your relationship with emergency contact</div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 mb-3">
-                        <label for="emergencyPhone" class="form-label">Phone Number</label>
-                        <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone" required>
+                        <label for="emergencyPhone" class="form-label required-field">Phone Number</label>
+                        <input type="tel" class="form-control" id="emergencyPhone" name="emergencyPhone" required pattern="[0-9]{11}" maxlength="11">
+                        <div class="invalid-feedback">Please enter a valid 11-digit emergency contact number</div>
                     </div>
                 </div>
             </div>
 
             <!-- Professional Information -->
             <div class="form-section">
-                <h2 class="section-title">Professional Information</h2>
+                <h2 class="section-title">Professional Information <span class="required-field">**</span></h2>
                 <div class="row mb-3">
                     <div class="col-12">
                         <label for="professionalStatus" class="form-label">Current Status</label>
@@ -557,7 +567,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="isAvailableForSupport" name="isAvailableForSupport">
                         <label class="form-check-label" for="isAvailableForSupport">
-                            Available for Church Support
+                            Are You Available To Join Any of The Ambassadors Church Department?
                         </label>
                     </div>
                 </div>
@@ -570,7 +580,21 @@
                             <option value="legal_support">Legal Support</option>
                             <option value="mentoring">Mentoring</option>
                             <option value="church_worker">Church Worker</option>
+                            <option value="worship_team">Worship Team</option>
+                            <option value="children_ministry">Children's Ministry</option>
+                            <option value="youth_ministry">Youth Ministry</option>
+                            <option value="evangelism">Evangelism</option>
+                            <option value="prayer_warrior">Prayer Warrior</option>
+                            <option value="technical_support">Technical Support</option>
+                            <option value="media_team">Media Team</option>
+                            <option value="ushering">Ushering</option>
+                            <option value="counseling">Counseling</option>
+                            <option value="hospitality">Hospitality</option>
+                            <option value="outreach_coordinator">Outreach Coordinator</option>
                         </select>
+                        <div id="otherSupportAreaField" class="mt-2" style="display: none;">
+                            <input type="text" class="form-control" id="otherSupportArea" name="otherSupportArea" placeholder="Please specify your area of support">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -582,7 +606,7 @@
                     <div class="form-check">
                         <input class="form-check-input" type="checkbox" id="isEntrepreneur" name="isEntrepreneur">
                         <label class="form-check-label" for="isEntrepreneur">
-                            Interested in Entrepreneurship
+                            Interested in Entrepreneurship or Mentorship?
                         </label>
                     </div>
                 </div>
@@ -594,7 +618,22 @@
                             <option value="Small Business Owner">Small Business Owner</option>
                             <option value="Freelancer">Freelancer</option>
                             <option value="Consultant">Consultant</option>
+                            <option value="E-commerce Entrepreneur">E-commerce Entrepreneur</option>
+                            <option value="Tech Startup Founder">Tech Startup Founder</option>
+                            <option value="Real Estate Investor">Real Estate Investor</option>
+                            <option value="Franchise Owner">Franchise Owner</option>
+                            <option value="Service Provider">Service Provider</option>
+                            <option value="Digital Content Creator">Digital Content Creator</option>
+                            <option value="Social Media Influencer">Social Media Influencer</option>
+                            <option value="Online Educator">Online Educator</option>
+                            <option value="Health and Wellness Coach">Health and Wellness Coach</option>
+                            <option value="Financial Advisor">Financial Advisor</option>
+                            <option value="Event Planner">Event Planner</option>
+                            <option value="Food and Beverage Entrepreneur">Food and Beverage Entrepreneur</option>
                         </select>
+                        <div id="otherBusinessTypeField" class="mt-2" style="display: none;">
+                            <input type="text" class="form-control" id="otherBusinessType" name="otherBusinessType" placeholder="Please specify your business type">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -610,7 +649,7 @@
                 <div class="modal-content">
                     <div class="modal-header bg-success text-white">
                         <h5 class="modal-title" id="successModalLabel">Registration Successful!</h5>
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" onclick="closeSuccessModal()"></button>
                     </div>
                     <div class="modal-body text-center">
                         <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
@@ -817,6 +856,35 @@
                 otherUniversityField.style.display = 'none';
                 otherUniversityInput.required = false;
                 otherUniversityInput.value = '';
+            }
+        });
+
+        // Add these event listeners to the JavaScript section
+        document.getElementById('supportArea').addEventListener('change', function() {
+            const otherSupportAreaField = document.getElementById('otherSupportAreaField');
+            const otherSupportAreaInput = document.getElementById('otherSupportArea');
+            
+            if (this.value === 'other') {
+                otherSupportAreaField.style.display = 'block';
+                otherSupportAreaInput.required = true;
+            } else {
+                otherSupportAreaField.style.display = 'none';
+                otherSupportAreaInput.required = false;
+                otherSupportAreaInput.value = '';
+            }
+        });
+
+        document.getElementById('businessType').addEventListener('change', function() {
+            const otherBusinessTypeField = document.getElementById('otherBusinessTypeField');
+            const otherBusinessTypeInput = document.getElementById('otherBusinessType');
+            
+            if (this.value === 'other') {
+                otherBusinessTypeField.style.display = 'block';
+                otherBusinessTypeInput.required = true;
+            } else {
+                otherBusinessTypeField.style.display = 'none';
+                otherBusinessTypeInput.required = false;
+                otherBusinessTypeInput.value = '';
             }
         });
 
@@ -1151,6 +1219,54 @@
                 }
             }
         }
+
+        // Add input validation for mobile number
+        document.getElementById('mobileNo').addEventListener('input', function(e) {
+            const mobileNo = e.target.value.replace(/\D/g, '');
+            if (mobileNo.length > 11) {
+                e.target.value = mobileNo.slice(0, 11);
+            }
+            validateField(e.target, /^[0-9]{11}$/, 'Please enter a valid 11-digit mobile number');
+        });
+
+        // Add input validation for email
+        document.getElementById('email').addEventListener('input', function(e) {
+            validateField(e.target, /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, 'Please enter a valid email address');
+        });
+
+        // Add input validation for emergency phone
+        document.getElementById('emergencyPhone').addEventListener('input', function(e) {
+            const emergencyPhone = e.target.value.replace(/\D/g, '');
+            if (emergencyPhone.length > 11) {
+                e.target.value = emergencyPhone.slice(0, 11);
+            }
+            validateField(e.target, /^[0-9]{11}$/, 'Please enter a valid 11-digit emergency contact number');
+        });
+
+        // Function to validate field
+        function validateField(field, pattern, errorMessage) {
+            const isValid = pattern.test(field.value);
+            field.classList.toggle('is-invalid', !isValid);
+            const feedback = field.nextElementSibling;
+            if (feedback && feedback.classList.contains('invalid-feedback')) {
+                feedback.textContent = errorMessage;
+            }
+            return isValid;
+        }
+
+        // Add this to the JavaScript section
+        function closeSuccessModal() {
+            const successModal = bootstrap.Modal.getInstance(document.getElementById('successModal'));
+            if (successModal) {
+                successModal.hide();
+            }
+        }
+
+        // Reset form fields on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('supportAreaField').style.display = 'none';
+            document.getElementById('businessTypeField').style.display = 'none';
+        });
     </script>
 </body>
 </html> 

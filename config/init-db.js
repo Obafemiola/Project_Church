@@ -113,7 +113,7 @@ async function initializeDatabase() {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 member_id INT NOT NULL,
                 isAvailable BOOLEAN NOT NULL DEFAULT FALSE,
-                supportArea ENUM('career_coaching', 'legal_support', 'mentoring', 'church_worker'),
+                supportArea ENUM('career_coaching', 'legal_support', 'mentoring', 'church_worker', 'worship_team', 'children_ministry', 'youth_ministry', 'evangelism', 'prayer_warrior', 'technical_support', 'media_team', 'ushering', 'counseling', 'hospitality', 'outreach_coordinator'),
                 FOREIGN KEY (member_id) REFERENCES members(id)
             )
         `);
@@ -124,7 +124,7 @@ async function initializeDatabase() {
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 member_id INT NOT NULL,
                 isInterested BOOLEAN NOT NULL DEFAULT FALSE,
-                businessType ENUM('Small Business Owner', 'Freelancer', 'Consultant'),
+                businessType ENUM('Small Business Owner', 'Freelancer', 'Consultant', 'E-commerce Entrepreneur', 'Tech Startup Founder', 'Real Estate Investor', 'Franchise Owner', 'Service Provider', 'Digital Content Creator', 'Social Media Influencer', 'Online Educator', 'Health and Wellness Coach', 'Financial Advisor', 'Event Planner', 'Food and Beverage Entrepreneur'),
                 FOREIGN KEY (member_id) REFERENCES members(id)
             )
         `);

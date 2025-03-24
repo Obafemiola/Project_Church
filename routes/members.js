@@ -208,63 +208,30 @@ router.post('/register', async (req, res) => {
                 ]
             );
 
-            // Insert professional information
-            const professionalData = {
-                member_id: memberId,
-                status: String(formData.professionalStatus).trim(),
-                profession: null,
-                workplaceName: null,
-                position: null,
-                experienceDuration: null,
-                university: null,
-                currentLevel: null,
-                nyscStatus: null,
-                cvPath: null,
-                stateOfPosting: null
-            };
+            // Insert into professional_info table
+            const professionalInfoQuery = `
+                INSERT INTO professional_info (
+                    member_id, status, profession, workplaceName, position, 
+                    experienceDuration, university, currentLevel, cvPath, 
+                    nyscStatus, stateOfPosting
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            `;
 
-            // Set fields based on professional status
-            switch (formData.professionalStatus) {
-                case 'working':
-                    professionalData.profession = String(formData.profession).trim();
-                    professionalData.workplaceName = String(formData.workplaceName).trim();
-                    professionalData.position = String(formData.position).trim();
-                    professionalData.experienceDuration = parseInt(formData.experienceDuration) || null;
-                    break;
-                case 'student':
-                    professionalData.university = String(formData.university).trim();
-                    professionalData.currentLevel = String(formData.currentLevel).trim();
-                    break;
-                case 'just_finished':
-                    professionalData.nyscStatus = String(formData.nyscStatus).trim();
-                    if (formData.nyscStatus === 'doing_nysc') {
-                        professionalData.stateOfPosting = String(formData.stateOfPosting).trim();
-                    }
-                    break;
-                case 'not_working':
-                    professionalData.cvPath = cvPath;
-                    break;
-            }
+            const professionalInfoValues = [
+                memberId,
+                formData.professionalStatus,
+                formData.profession || null,
+                formData.workplaceName || null,
+                formData.position || null,
+                formData.experienceDuration || null,
+                formData.university || null,
+                formData.currentLevel || null,
+                formData.cvPath || null,
+                formData.nyscStatus || null,
+                formData.stateOfPosting || null
+            ];
 
-            await conn.query(
-                `INSERT INTO professional_info 
-                (member_id, status, profession, workplaceName, position, experienceDuration, 
-                 university, currentLevel, cvPath, nyscStatus, stateOfPosting) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
-                [
-                    professionalData.member_id,
-                    professionalData.status,
-                    professionalData.profession,
-                    professionalData.workplaceName,
-                    professionalData.position,
-                    professionalData.experienceDuration,
-                    professionalData.university,
-                    professionalData.currentLevel,
-                    professionalData.cvPath,
-                    professionalData.nyscStatus,
-                    professionalData.stateOfPosting || null
-                ]
-            );
+            await conn.query(professionalInfoQuery, professionalInfoValues);
 
             // Insert certifications
             if (formData.certifications) {
@@ -307,7 +274,7 @@ router.post('/register', async (req, res) => {
                     [
                         memberId, 
                         true, 
-                        formData.supportArea && typeof formData.supportArea === 'string' ? formData.supportArea.trim() : null
+                        formData.supportArea || null
                     ]
                 );
             }
@@ -319,7 +286,7 @@ router.post('/register', async (req, res) => {
                     [
                         memberId, 
                         true, 
-                        formData.businessType && typeof formData.businessType === 'string' ? formData.businessType.trim() : null
+                        formData.businessType || null
                     ]
                 );
             }
