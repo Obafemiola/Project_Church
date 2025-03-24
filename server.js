@@ -47,7 +47,7 @@ app.use('/reports', reportsRouter);
 
 // Serve the landing page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'registration.html'));
+  res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 // Serve the registration form
