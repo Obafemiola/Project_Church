@@ -899,97 +899,44 @@
             const validationErrors = validateForm();
             
             if (validationErrors.length > 0) {
-                showValidationErrors(validationErrors);
+                // Display validation errors
+                validationErrors.forEach(error => {
+                    const field = document.getElementById(error.field);
+                    if (field) {
+                        field.classList.add('is-invalid');
+                        const feedback = field.nextElementSibling;
+                        if (feedback && feedback.classList.contains('invalid-feedback')) {
+                            feedback.textContent = error.message;
+                        }
+                    }
+                });
                 return;
             }
 
-            const formData = new FormData(this);
-
-            // Handle social media platforms
-            const platforms = ['instagram', 'twitter', 'tiktok'];
-            platforms.forEach(platform => {
-                const isChecked = document.getElementById(platform).checked;
-                const handle = document.getElementById(`${platform}Handle`).value.trim();
-                
-                if (isChecked && handle) {
-                    formData.set(platform, 'on');
-                    formData.set(`${platform}Handle`, handle);
-                } else {
-                    formData.delete(platform);
-                    formData.delete(`${platform}Handle`);
-                }
-            });
-
-            // Handle certifications and skills
-            const certifications = document.getElementById('certifications').value;
-            const skills = document.getElementById('skills').value;
-            
-            formData.set('certifications', certifications.trim());
-            formData.set('skills', skills.trim());
-
-            // Handle professional status specific fields
-            const professionalStatus = formData.get('professionalStatus');
-            if (professionalStatus === 'working') {
-                if (formData.get('profession') === 'Other') {
-                    formData.set('profession', document.getElementById('otherProfession').value.trim());
-                }
-            } else if (professionalStatus === 'student') {
-                if (formData.get('university') === 'Other') {
-                    formData.set('university', document.getElementById('otherUniversity').value.trim());
-                }
-            } else if (professionalStatus === 'just_finished') {
-                const nyscStatus = document.getElementById('nyscStatus').value;
-                if (!nyscStatus) {
-                    validationErrors.push({ field: 'nyscStatus', message: 'Please select your NYSC Status' });
-                }
-            } else if (professionalStatus === 'not_working') {
-                const cvUpload = document.getElementById('cvUpload').files;
-                if (!cvUpload || cvUpload.length === 0) {
-                    validationErrors.push({ field: 'cvUpload', message: 'Please upload your CV' });
-                }
-            }
-
             try {
-                const response = await fetch('/api/register', {
+                const formData = new FormData(this);
+                const response = await fetch('/api/members/register', {
                     method: 'POST',
                     body: formData
                 });
 
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const result = await response.json();
                 
-                if (response.ok) {
-                    // Update member ID in modal
-                    document.getElementById('memberIdDisplay').textContent = result.memberId;
-                    
-                    // Show success modal
-                    const successModal = new bootstrap.Modal(document.getElementById('successModal'));
-                    successModal.show();
-                    
-                    // Reset form and clear validation state
-                    this.reset();
-                    clearValidationState();
-                    
-                    // Reset all conditional fields
-                    document.querySelectorAll('.social-media-handle').forEach(input => {
-                        input.style.display = 'none';
-                        input.value = '';
-                    });
-                    document.getElementById('supportAreaField').style.display = 'none';
-                    document.getElementById('businessTypeField').style.display = 'none';
-                    document.querySelectorAll('.status-section').forEach(section => {
-                        section.style.display = 'none';
-                    });
-                } else {
-                    const errorMessage = result.error || 'Registration failed';
-                    showAlert('danger', errorMessage);
-                    
-                    if (result.validationErrors) {
-                        showValidationErrors(result.validationErrors);
-                    }
-                }
+                // Display success message with member ID
+                document.getElementById('memberIdDisplay').textContent = result.memberId;
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+                
+                // Reset form
+                this.reset();
+                
             } catch (error) {
                 console.error('Error:', error);
-                showAlert('danger', 'An error occurred during registration. Please try again.');
+                alert('An error occurred while submitting the form. Please try again.');
             }
         });
 

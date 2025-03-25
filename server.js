@@ -32,8 +32,15 @@ if (!require('fs').existsSync(cvsDir)){
     require('fs').mkdirSync(cvsDir);
 }
 
-// Serve static files from public directory
+// Create public directory if it doesn't exist
+const publicDir = path.join(__dirname, 'public');
+if (!require('fs').existsSync(publicDir)){
+    require('fs').mkdirSync(publicDir);
+}
+
+// Serve static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/views', express.static(path.join(__dirname, 'views')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Set view engine
@@ -47,17 +54,29 @@ app.use('/reports', reportsRouter);
 
 // Serve the landing page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'index.html'));
+    res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
 // Serve the registration form
 app.get('/registration', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'registration.html'));
+    res.sendFile(path.join(__dirname, 'views', 'registration.html'));
 });
 
 // Serve report page
 app.get('/report', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'report.html'));
+});
+
+// Handle 404 errors
+app.use((req, res) => {
+    console.log('404 Error for:', req.url);
+    res.status(404).send('404: Page not found');
+});
+
+// Error handler
+app.use((err, req, res, next) => {
+    console.error('Error:', err);
+    res.status(500).send('500: Internal Server Error');
 });
 
 // Start server
