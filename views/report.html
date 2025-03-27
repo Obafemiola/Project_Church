@@ -408,7 +408,7 @@
                 document.getElementById('errorMessage').style.display = 'none';
 
                 console.log('Fetching data for date range:', { startDate, endDate });
-                const response = await fetch(`/reports/api/reports?startDate=${startDate}&endDate=${endDate}`);
+                const response = await fetch(`/api/reports?startDate=${startDate}&endDate=${endDate}`);
                 console.log('Response status:', response.status);
 
                 if (!response.ok) {
@@ -498,7 +498,7 @@
                 const endDate = document.getElementById('endDate').value;
                 
                 // Create the URL with query parameters
-                const url = `/reports/api/reports/export?startDate=${startDate}&endDate=${endDate}`;
+                const url = `/api/reports/export?startDate=${startDate}&endDate=${endDate}`;
                 
                 // Create a temporary link element
                 const link = document.createElement('a');
