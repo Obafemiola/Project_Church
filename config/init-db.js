@@ -110,10 +110,11 @@ async function initializeDatabase() {
         // Create church support table
         await db.query(`
             CREATE TABLE IF NOT EXISTS church_support (
-                id INT AUTO_INCREMENT PRIMARY KEY,
+                id INT PRIMARY KEY AUTO_INCREMENT,
                 member_id INT NOT NULL,
-                isAvailable BOOLEAN NOT NULL DEFAULT FALSE,
-                supportArea ENUM('career_coaching', 'legal_support', 'mentoring', 'church_worker', 'worship_team', 'children_ministry', 'youth_ministry', 'evangelism', 'prayer_warrior', 'technical_support', 'media_team', 'ushering', 'counseling', 'hospitality', 'outreach_coordinator'),
+                isAvailable BOOLEAN DEFAULT false,
+                supportArea ENUM('outreach_and_evangelism', 'prayer_ambassadors', 'care_unit', 'finance_team', 'bible_study', 'choir_worship', 'drama_and_performance', 'pr_and_communications', 'media', 'sound', 'ambience', 'business', 'protocol', 'follow_up') NOT NULL,
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (member_id) REFERENCES members(id)
             )
         `);

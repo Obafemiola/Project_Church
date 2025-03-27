@@ -5,6 +5,7 @@ const path = require('path');
 const fileUpload = require('express-fileupload');
 const memberRoutes = require('./routes/members');
 const reportsRouter = require('./routes/reports');
+const consentRouter = require('./routes/consent');
 
 const app = express();
 
@@ -50,9 +51,10 @@ app.engine('html', require('ejs').renderFile);
 
 // Routes
 app.use('/api/members', memberRoutes);
-app.use('/reports', reportsRouter);
+app.use('/api/reports', reportsRouter);
+app.use('/api/consent', consentRouter);
 
-// Serve the landing page
+// Serve the landing page (index page)
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
@@ -62,8 +64,13 @@ app.get('/registration', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'registration.html'));
 });
 
-// Serve report page
+// Redirect /report to /reports
 app.get('/report', (req, res) => {
+    res.redirect('/reports');
+});
+
+// Serve report page
+app.get('/reports', (req, res) => {
     res.sendFile(path.join(__dirname, 'views', 'report.html'));
 });
 

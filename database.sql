@@ -55,7 +55,7 @@ CREATE TABLE church_support (
     id INT PRIMARY KEY AUTO_INCREMENT,
     member_id INT NOT NULL,
     isAvailable BOOLEAN DEFAULT false,
-    supportArea ENUM('career_coaching', 'legal_support', 'mentoring', 'church_worker', 'worship_team', 'children_ministry', 'youth_ministry', 'evangelism', 'prayer_warrior', 'technical_support', 'media_team', 'ushering', 'counseling', 'hospitality', 'outreach_coordinator') NOT NULL,
+    supportArea ENUM('outreach_and_evangelism', 'prayer_ambassadors', 'care_unit', 'finance_team', 'bible_study', 'choir_worship', 'drama_and_performance', 'pr_and_communications', 'media', 'sound', 'ambience', 'business', 'protocol', 'follow_up') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (member_id) REFERENCES members(id)
 );
@@ -67,4 +67,14 @@ CREATE TABLE entrepreneurial_interests (
     businessType ENUM('Small Business Owner', 'Freelancer', 'Consultant', 'E-commerce Entrepreneur', 'Tech Startup Founder', 'Real Estate Investor', 'Franchise Owner', 'Service Provider', 'Digital Content Creator', 'Social Media Influencer', 'Online Educator', 'Health and Wellness Coach', 'Financial Advisor', 'Event Planner', 'Food and Beverage Entrepreneur') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (member_id) REFERENCES members(id)
+);
+
+-- Create user consent table
+CREATE TABLE IF NOT EXISTS user_consent (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    consent_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    ip_address VARCHAR(45),
+    user_agent TEXT,
+    consent_text TEXT,
+    consent_status BOOLEAN DEFAULT TRUE
 ); 

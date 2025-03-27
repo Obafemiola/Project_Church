@@ -1,0 +1,5 @@
+[33mcommit e3296c954624c32dd7676cfb3fb9ef26edc44811[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mdevelopment[m[33m)[m
+Author: olawale obafemi <obafemi.ola@gmail.com>
+Date:   Tue Mar 25 05:54:04 2025 +0100
+
+    Update: Fixed form submission endpoint and improved error handling

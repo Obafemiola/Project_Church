@@ -4,7 +4,7 @@ const db = require('../config/database');
 const xlsx = require('xlsx');
 
 // Get all report data
-router.get('/api/reports', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         console.log('Received report request with query:', req.query);
         const { startDate, endDate } = req.query;
@@ -168,7 +168,7 @@ router.get('/api/reports', async (req, res) => {
 });
 
 // Add new route for Excel export
-router.get('/api/reports/export', async (req, res) => {
+router.get('/export', async (req, res) => {
     try {
         const { startDate, endDate } = req.query;
         console.log('Exporting report data with query:', { startDate, endDate });

@@ -103,12 +103,76 @@
             z-index: 2;
         }
 
+        .consent-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .consent-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 2rem;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .consent-text {
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .consent-checkbox {
+            margin: 1rem 0;
+        }
+
+        .consent-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .btn-consent {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-accept {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+
+        .btn-decline {
+            background-color: #e5e7eb;
+            color: #374151;
+            border: 1px solid #d1d5db;
+        }
+
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.5rem;
             }
             .hero-subtitle {
                 font-size: 1.1rem;
+            }
+            .consent-content {
+                width: 95%;
+                margin: 10% auto;
             }
         }
     </style>
@@ -119,10 +183,101 @@
         <div class="hero-content">
             <h1 class="hero-title">The CLAM Ambassadors Church<br>Member Registration</h1>
             <p class="hero-subtitle">Join our vibrant community of believers and be part of something greater.</p>
-            <a href="/registration" class="cta-button">Start Registration</a>
+            <button onclick="showConsentModal()" class="cta-button">Start Registration</button>
         </div>
     </section>
 
+    <!-- Consent Modal -->
+    <div id="consentModal" class="consent-modal">
+        <div class="consent-content">
+            <h2>Data Privacy Consent</h2>
+            <div class="consent-text">
+                <p>I hereby consent to the collection and processing of my personal data by The CLAM Ambassadors Church for the following purposes:</p>
+                <ul>
+                    <li>Member registration and management</li>
+                    <li>Communication about church activities and events</li>
+                    <li>Provision of pastoral care and support</li>
+                    <li>Administrative and operational purposes</li>
+                    <li>Compliance with legal obligations</li>
+                </ul>
+                <p>I understand that my personal data will be:</p>
+                <ul>
+                    <li>Processed in accordance with the Nigeria Data Protection Act and other applicable laws</li>
+                    <li>Stored securely and protected from unauthorized access</li>
+                    <li>Not shared with third parties without my explicit consent</li>
+                    <li>Retained only for as long as necessary for the stated purposes</li>
+                </ul>
+                <p>I acknowledge my rights to:</p>
+                <ul>
+                    <li>Access my personal data</li>
+                    <li>Request correction of inaccurate data</li>
+                    <li>Request deletion of my data</li>
+                    <li>Withdraw my consent at any time</li>
+                </ul>
+            </div>
+            <div class="consent-checkbox">
+                <input type="checkbox" id="consentCheckbox" class="form-check-input">
+                <label for="consentCheckbox" class="form-check-label">I agree to the above terms and consent to the processing of my personal data</label>
+            </div>
+            <div class="consent-buttons">
+                <button onclick="declineConsent()" class="btn-consent btn-decline">Decline</button>
+                <button onclick="acceptConsent()" class="btn-consent btn-accept" id="acceptButton" disabled>Accept & Continue</button>
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function showConsentModal() {
+            document.getElementById('consentModal').style.display = 'block';
+        }
+
+        function hideConsentModal() {
+            document.getElementById('consentModal').style.display = 'none';
+        }
+
+        function acceptConsent() {
+            // Record consent in the database
+            fetch('/api/consent', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    consent: true,
+                    consent_text: document.querySelector('.consent-text').innerText
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = '/registration';
+                } else {
+                    alert('Error recording consent. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error recording consent. Please try again.');
+            });
+        }
+
+        function declineConsent() {
+            hideConsentModal();
+        }
+
+        // Enable/disable accept button based on checkbox
+        document.getElementById('consentCheckbox').addEventListener('change', function() {
+            document.getElementById('acceptButton').disabled = !this.checked;
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('consentModal');
+            if (event.target === modal) {
+                hideConsentModal();
+            }
+        }
+    </script>
 </body>
 </html> 
